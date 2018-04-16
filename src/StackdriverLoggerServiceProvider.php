@@ -41,7 +41,7 @@ class StackdriverLoggerServiceProvider extends ServiceProvider
         $this->app->bind(Logger::class, function (Application $app) {
             return new Writer(
                 new \Monolog\Logger('stackdriver', [$app->make(StackdriverLoggingHandler::class)]),
-                app(Dispatcher::class)
+                $app->make(Dispatcher::class)
             );
         });
     }
