@@ -20,7 +20,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Wonderkind\\StackdriverLogging\\Debugbar\\StackdriverLoggerServiceProvider"
+        "Wonderkind\\StackdriverLogging\\StackdriverLoggerServiceProvider"
       ]
     }
   }
