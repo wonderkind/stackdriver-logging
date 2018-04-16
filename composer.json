@@ -1,0 +1,27 @@
+{
+  "name": "wonderkind/stackdriver-logging",
+  "description": "Log to Google Stackdriver Logging using Monolog",
+  "authors": [
+    {
+      "name": "Bas van Vliet",
+      "email": "bas.vanvliet@wonderkind.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Wonderkind\\StackdriverLogging\\": "src/"
+    }
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "google/cloud-logging": "^1.10",
+    "monolog/monolog": "~1.12",
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Wonderkind\\StackdriverLogging\\Debugbar\\StackdriverLoggerServiceProvider"
+      ]
+    }
+  }
+}
