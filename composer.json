@@ -16,7 +16,7 @@
   "require": {
     "google/cloud-logging": "^1.10",
     "monolog/monolog": "~1.12",
-    "illuminate/log": "5.5.*"
+    "illuminate/log": "~5.5"
   },
   "extra": {
     "laravel": {
