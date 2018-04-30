@@ -11,12 +11,6 @@ use Wonderkind\StackdriverLogging\StackdriverLoggerServiceProvider;
 
 class StackdriverLoggerServiceProviderTest extends TestCase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-
-    }
-
     /**
      * @param \Illuminate\Foundation\Application $app
      * @return array
