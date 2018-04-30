@@ -99,3 +99,9 @@ When stackdriver is not the default driver, you can still log to Stackdriver by 
 Log::channel('stackdriver')->info('Something happened!');
 ```
 
+# Resources
+
+- [Stackdriver PHP documentation](https://cloud.google.com/logging/docs/reference/libraries#client-libraries-install-php)
+- [Stackdriver PHP library reference](https://googlecloudplatform.github.io/google-cloud-php/#/docs/google-cloud/v0.61.0/logging/loggingclient)
+- [Google Cloud Platform authentication documentation](https://cloud.google.com/docs/authentication/production)
+- [Laravel logging documentation](https://laravel.com/docs/5.6/logging)
