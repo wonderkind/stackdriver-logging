@@ -44,7 +44,7 @@ class StackdriverLoggerServiceProvider extends ServiceProvider
         $this->app->singleton(LoggerInterface::class, function ($app) {
             $monolog = new \Monolog\Logger('stackdriver', [$app->make(StackdriverLoggingHandler::class)]);
 
-            return new Logger($monolog);
+            return new StackdriverLogger($monolog);
         });
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Orchestra\Testbench\TestCase;
 use Wonderkind\StackdriverLogging\Handler\StackdriverLoggingHandler;
 use Wonderkind\StackdriverLogging\LoggerInterface;
+use Wonderkind\StackdriverLogging\StackdriverLogger;
 use Wonderkind\StackdriverLogging\StackdriverLoggerServiceProvider;
 
 class StackdriverLoggerServiceProviderTest extends TestCase
@@ -64,6 +65,7 @@ class StackdriverLoggerServiceProviderTest extends TestCase
     {
         $logger = $this->app->make(LoggerInterface::class);
         $this->assertInstanceOf(Logger::class, $logger);
+        $this->assertInstanceOf(StackdriverLogger::class, $logger);
         $this->assertInstanceOf(
             StackdriverLoggingHandler::class,
             array_first($logger->getLogger()->getHandlers())
