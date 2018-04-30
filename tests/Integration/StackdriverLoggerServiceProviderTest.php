@@ -1,9 +1,11 @@
 <?php
 declare(strict_types=1);
 
+use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Log;
 use Orchestra\Testbench\TestCase;
 use Wonderkind\StackdriverLogging\Handler\StackdriverLoggingHandler;
+use Wonderkind\StackdriverLogging\LoggerInterface;
 use Wonderkind\StackdriverLogging\StackdriverLoggerServiceProvider;
 
 class StackdriverLoggerServiceProviderTest extends TestCase
@@ -53,6 +55,19 @@ class StackdriverLoggerServiceProviderTest extends TestCase
     {
         $handler = $this->app->make(StackdriverLoggingHandler::class);
         $this->assertInstanceOf(StackdriverLoggingHandler::class, $handler);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_be_injected_from_the_container()
+    {
+        $logger = $this->app->make(LoggerInterface::class);
+        $this->assertInstanceOf(Logger::class, $logger);
+        $this->assertInstanceOf(
+            StackdriverLoggingHandler::class,
+            array_first($logger->getLogger()->getHandlers())
+        );
     }
 
     /**

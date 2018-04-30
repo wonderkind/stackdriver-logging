@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Wonderkind\StackdriverLogging;
 
 use Google\Cloud\Logging\LoggingClient;
+use Illuminate\Log\Logger;
 use Illuminate\Support\ServiceProvider;
 use Wonderkind\StackdriverLogging\Handler\StackdriverLoggingHandler;
 
@@ -27,20 +28,30 @@ class StackdriverLoggerServiceProvider extends ServiceProvider
         $this->mergeStackdriverConfig();
         $this->bindLoggingClient();
         $this->bindLogHandler();
+        $this->bindLogger();
     }
 
     /**
      *
      */
-    protected function mergeStackdriverConfig(): void
+    private function mergeStackdriverConfig(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/config/stackdriver.php', 'stackdriver');
     }
 
+    private function bindLogger(): void
+    {
+        $this->app->singleton(LoggerInterface::class, function ($app) {
+            $monolog = new \Monolog\Logger('stackdriver', [$app->make(StackdriverLoggingHandler::class)]);
+
+            return new Logger($monolog);
+        });
+    }
+
     /**
      *
      */
-    protected function bindLoggingClient(): void
+    private function bindLoggingClient(): void
     {
         $this->app->bind(LoggingClient::class, function () {
             return new LoggingClient(['projectId' => config('stackdriver.project_id')]);
@@ -50,7 +61,7 @@ class StackdriverLoggerServiceProvider extends ServiceProvider
     /**
      *
      */
-    protected function bindLogHandler(): void
+    private function bindLogHandler(): void
     {
         $this->app->bind(StackdriverLoggingHandler::class, function ($app) {
             /** @var LoggingClient $loggingClient */
