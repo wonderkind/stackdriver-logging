@@ -15,8 +15,10 @@
   "minimum-stability": "stable",
   "require": {
     "google/cloud-logging": "^1.10",
-    "monolog/monolog": "~1.12",
-    "illuminate/log": "~5.5"
+    "monolog/monolog": "~1.12"
+  },
+  "require-dev": {
+    "orchestra/testbench": "~3.0"
   },
   "extra": {
     "laravel": {
