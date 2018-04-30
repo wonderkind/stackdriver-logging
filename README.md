@@ -24,7 +24,7 @@ Then add the package to the `require` section of your `composer.json`
 
 ```json
 "require": {
-    "wonderkind/stackdriver-logging": "@dev"
+    "wonderkind/stackdriver-logging": "~1.0"
 }
 ```
 
