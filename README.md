@@ -81,7 +81,13 @@ If you always want to log to stackdriver besides your current stack, add stackdr
 
 Make sure to set your `LOG_CHANNEL` environment variable to `stack`
 
+### Lumen
 
+In Laravel the Service Provider will be automatically discovered.  In Lumen you'll need to manually register it in `bootstrap/app.php`. Add this line to the file:
+
+```php
+$app->register(Wonderkind\StackdriverLogging\StackdriverLoggerServiceProvider::class);
+```
 
 # Usage
 
@@ -89,7 +95,7 @@ To use as default driver set stackdriver as  your default logger or add it as ch
 
 ## Inject via the Service Container
 
-When stackdriver is not the default driver, you can get an instance of the Laravel logger with the stackdriver handler by injecting the `\Wonderkind\StackdriverLogging\LoggerInterface`. 
+When stackdriver is not the default driver, you can get an (inherited) instance of the Laravel logger with the stackdriver handler by injecting the `\Wonderkind\StackdriverLogging\LoggerInterface`. 
 
 ## Using the `Log` Facade
 
