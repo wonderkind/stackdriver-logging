@@ -8,6 +8,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Log\Writer;
 use Illuminate\Support\ServiceProvider;
+use Wonderkind\StackdriverLogging\Handler\StackdriverLoggingHandler;
 
 class StackdriverLoggerServiceProvider extends ServiceProvider
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Wonderkind\StackdriverLogging;
+namespace Wonderkind\StackdriverLogging\Handler;
 
 use Google\Cloud\Logging\PsrLogger;
 use Monolog\Handler\PsrHandler;
