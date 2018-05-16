@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Wonderkind\StackdriverLogging;
 
 use Google\Cloud\Logging\LoggingClient;
-use Illuminate\Log\Logger;
 use Illuminate\Support\ServiceProvider;
 use Wonderkind\StackdriverLogging\Handler\StackdriverLoggingHandler;
 
