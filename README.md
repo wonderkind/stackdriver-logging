@@ -30,7 +30,7 @@ Then add the package to the `require` section of your `composer.json`
 
 You could also run from you command line:
 
-`composer require wonderkind/stackdriver-logging @dev`
+`composer require wonderkind/stackdriver-logging`
 
 ## Configuration
 
