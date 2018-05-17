@@ -75,10 +75,15 @@ class StackdriverLoggerServiceProvider extends ServiceProvider
      */
     private function configFilePath(): string
     {
+        // The config_path helper is only available in Laravel
+        // so we need two different ways to make the config file path
+        //
+        // Laravel:
         if (function_exists('config_path')) {
             return config_path('stackdriver.php');
         }
 
+        // Lumen:
         return $this->app->basePath() . '/config/stackdriver.php';
     }
 }
