@@ -36,7 +36,7 @@ You could also run from you command line:
 
 First, make sure you are authenticated to Google Cloud Platform. This can be done by setting the `GOOGLE_APPLICATION_CREDENTIALS` environment variable. If this is not set, it will default to the service account for Compute Engine, Kubernetes Engine, App Engine, and/or Cloud Functions instances. See the [documentation](https://cloud.google.com/docs/authentication/production) for more information. 
 
-Then set the optional `GOOGLE_APPLICATION_CREDENTIALS`variable, the project ID and the log you want to use in your `.env` and add stackdriver as a channel to the Laravel/Lumen configuration.
+After setting the optional `GOOGLE_APPLICATION_CREDENTIALS` variable, set the project ID and the log you want to use in your `.env` and add stackdriver as a channel to the Laravel/Lumen configuration.
 
 ### .env
 
