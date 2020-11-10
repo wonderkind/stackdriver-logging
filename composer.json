@@ -15,7 +15,7 @@
   "minimum-stability": "stable",
   "require": {
     "google/cloud-logging": "^1.10",
-    "monolog/monolog": "~1.12"
+    "monolog/monolog": "~2.1"
   },
   "require-dev": {
     "orchestra/testbench": "~3.0"
