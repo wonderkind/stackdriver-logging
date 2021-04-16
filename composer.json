@@ -3,8 +3,8 @@
   "description": "Log to Google Stackdriver Logging using Monolog",
   "authors": [
     {
-      "name": "Bas van Vliet",
-      "email": "bas.vanvliet@wonderkind.com"
+      "name": "Wonderkind Technologies B.V.",
+      "email": "devops@wonderkind.com"
     }
   ],
   "autoload": {
