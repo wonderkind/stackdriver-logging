@@ -1,27 +1,23 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Wonderkind\StackdriverLogging;
 
+use Monolog\Logger as Monolog;
 use Google\Cloud\Logging\LoggingClient;
 use Illuminate\Support\ServiceProvider;
 use Wonderkind\StackdriverLogging\Handler\StackdriverLoggingHandler;
 
-class StackdriverLoggerServiceProvider extends ServiceProvider
+final class StackdriverLoggerServiceProvider extends ServiceProvider
 {
-    /**
-     *
-     */
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/config/stackdriver.php' => $this->configFilePath(),
+            __DIR__ . $this->defaultPath() => $this->configFilePath(),
         ]);
     }
 
-    /**
-     *
-     */
     public function register(): void
     {
         $this->mergeStackdriverConfig();
@@ -30,26 +26,20 @@ class StackdriverLoggerServiceProvider extends ServiceProvider
         $this->bindLogger();
     }
 
-    /**
-     *
-     */
     private function mergeStackdriverConfig(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/stackdriver.php', 'stackdriver');
+        $this->mergeConfigFrom(__DIR__ . $this->defaultPath(), 'stackdriver');
     }
 
     private function bindLogger(): void
     {
         $this->app->singleton(LoggerInterface::class, function ($app) {
-            $monolog = new \Monolog\Logger('stackdriver', [$app->make(StackdriverLoggingHandler::class)]);
+            $monolog = new Monolog('stackdriver', [$app->make(StackdriverLoggingHandler::class)]);
 
             return new StackdriverLogger($monolog);
         });
     }
 
-    /**
-     *
-     */
     private function bindLoggingClient(): void
     {
         $this->app->bind(LoggingClient::class, function () {
@@ -57,33 +47,34 @@ class StackdriverLoggerServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     *
-     */
     private function bindLogHandler(): void
     {
         $this->app->bind(StackdriverLoggingHandler::class, function ($app) {
-            /** @var LoggingClient $loggingClient */
             $loggingClient = $app->make(LoggingClient::class);
+
+            assert($loggingClient instanceof LoggingClient);
 
             return new StackdriverLoggingHandler($loggingClient->psrLogger(config('stackdriver.log')));
         });
     }
 
-    /**
-     * @return string
-     */
     private function configFilePath(): string
     {
-        // The config_path helper is only available in Laravel
-        // so we need two different ways to make the config file path
-        //
-        // Laravel:
-        if (function_exists('config_path')) {
-            return config_path('stackdriver.php');
-        }
+        return (function_exists('config_path')) ? $this->loadLaravel() : $this->loadLumen();
+    }
 
-        // Lumen:
-        return $this->app->basePath() . '/config/stackdriver.php';
+    private function loadLaravel(): string
+    {
+        return config_path('stackdriver.php');
+    }
+
+    private function loadLumen(): string
+    {
+        return $this->app->basePath() . $this->defaultPath();
+    }
+
+    private function defaultPath(): string
+    {
+        return '/config/stackdriver.php';
     }
 }
