@@ -16,7 +16,8 @@
 	"minimum-stability": "stable",
 	"require": {
 		"google/cloud-logging": "^1.24",
-		"monolog/monolog": "^2.5.0"
+		"monolog/monolog": "^2.5.0",
+		"psr/log": "2.0.0"
 	},
 	"require-dev": {
 		"roave/security-advisories": "dev-latest",
