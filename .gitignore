@@ -22,3 +22,5 @@ Homestead.json
 
 #IDE
 .idea
+.php-cs-fixer.cache
+.phpunit.result.cache
