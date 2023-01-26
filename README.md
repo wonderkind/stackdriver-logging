@@ -61,7 +61,7 @@ In `config/logging.php` add stackdriver to channels list.
   'channels' => [
     'stackdriver' => [
         'driver' => 'monolog',
-        'handler' => StackdriverLoggingHandler::class,
+        'handler' => Wonderkind\StackdriverLogging\Handler\StackdriverLoggingHandler::class,
         'level' => env('LOG_LEVEL', 'debug'),
         'formatter' => Monolog\Formatter\GoogleCloudLoggingFormatter::class,
         'formatter_with' => [
