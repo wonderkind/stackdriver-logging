@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Wonderkind\StackdriverLogging;
 
+use Exception;
 use Monolog\Logger as Monolog;
 use Google\Cloud\Logging\LoggingClient;
 use Illuminate\Support\ServiceProvider;
 use Wonderkind\StackdriverLogging\Handler\StackdriverLoggingHandler;
+use Google\Cloud\Core\Compute\Metadata;
 
 final class StackdriverLoggerServiceProvider extends ServiceProvider
 {
@@ -50,12 +52,35 @@ final class StackdriverLoggerServiceProvider extends ServiceProvider
     private function bindLogHandler(): void
     {
         $this->app->bind(StackdriverLoggingHandler::class, function ($app) {
+            /** @var LoggingClient $loggingClient */
             $loggingClient = $app->make(LoggingClient::class);
+            $options = $this->getLoggerOptions();
 
-            assert($loggingClient instanceof LoggingClient);
-
-            return new StackdriverLoggingHandler($loggingClient->psrLogger(config('stackdriver.log')));
+            return new StackdriverLoggingHandler($loggingClient->psrLogger(config('stackdriver.log'), $options));
         });
+    }
+
+    private function getLoggerOptions(): array
+    {
+        try {
+            $metadata = new Metadata();
+            $id = $metadata->get('instance/id');
+
+            if (!$id) {
+                return [];
+            }
+
+            return [
+                'resource' => [
+                    'type' => 'gce_instance',
+                    'labels' => [
+                        'instance_id' => $id,
+                    ],
+                ],
+            ];
+        } catch (Exception $exception) {
+            return [];
+        }
     }
 
     private function configFilePath(): string
