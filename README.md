@@ -4,7 +4,7 @@ Adds a Monolog handler to Laravel/Lumen
 
 ## Requirements
 
-Laravel/Lumen >= 5.6.*
+Laravel/Lumen >= 5.6.\*
 
 ## Installation
 
@@ -34,7 +34,7 @@ You could also run from you command line:
 
 ## Configuration
 
-First, make sure you are authenticated to Google Cloud Platform. This can be done by setting the `GOOGLE_APPLICATION_CREDENTIALS` environment variable. If this is not set, it will default to the service account for Compute Engine, Kubernetes Engine, App Engine, and/or Cloud Functions instances. See the [documentation](https://cloud.google.com/docs/authentication/production) for more information. 
+First, make sure you are authenticated to Google Cloud Platform. This can be done by setting the `GOOGLE_APPLICATION_CREDENTIALS` environment variable. If this is not set, it will default to the service account for Compute Engine, Kubernetes Engine, App Engine, and/or Cloud Functions instances. See the [documentation](https://cloud.google.com/docs/authentication/production) for more information.
 
 After setting the optional `GOOGLE_APPLICATION_CREDENTIALS` variable, set the project ID and the log you want to use in your `.env` and add stackdriver as a channel to the Laravel/Lumen configuration.
 
@@ -60,10 +60,14 @@ In `config/logging.php` add stackdriver to channels list.
 [
   'channels' => [
     'stackdriver' => [
-            'driver' => 'monolog',
-            'handler' => Wonderkind\StackdriverLogging\Handler\StackdriverLoggingHandler::class
-        ]
-  ]
+        'driver' => 'monolog',
+        'handler' => Wonderkind\StackdriverLogging\Handler\StackdriverLoggingHandler::class,
+        'level' => env('LOG_LEVEL', 'debug'),
+        'formatter' => Monolog\Formatter\GoogleCloudLoggingFormatter::class,
+        'formatter_with' => [
+            'includeStacktraces' => true
+        ],
+    ]
 ]
 ```
 
@@ -83,7 +87,7 @@ Make sure to set your `LOG_CHANNEL` environment variable to `stack`
 
 ### Lumen
 
-In Laravel the Service Provider will be automatically discovered.  In Lumen you'll need to manually register it in `bootstrap/app.php`. Add this line to the file:
+In Laravel the Service Provider will be automatically discovered. In Lumen you'll need to manually register it in `bootstrap/app.php`. Add this line to the file:
 
 ```php
 $app->register(Wonderkind\StackdriverLogging\StackdriverLoggerServiceProvider::class);
@@ -91,11 +95,11 @@ $app->register(Wonderkind\StackdriverLogging\StackdriverLoggerServiceProvider::c
 
 # Usage
 
-To use as default driver set stackdriver as  your default logger or add it as channel to the stack as described in the 'Configuration' section. When then using the Laravel logger, it will log everything to Stackdriver
+To use as default driver set stackdriver as your default logger or add it as channel to the stack as described in the 'Configuration' section. When then using the Laravel logger, it will log everything to Stackdriver
 
 ## Inject via the Service Container
 
-When stackdriver is not the default driver, you can get an (inherited) instance of the Laravel logger with the stackdriver handler by injecting the `\Wonderkind\StackdriverLogging\LoggerInterface`. 
+When stackdriver is not the default driver, you can get an (inherited) instance of the Laravel logger with the stackdriver handler by injecting the `\Wonderkind\StackdriverLogging\LoggerInterface`.
 
 ## Using the `Log` Facade
 
